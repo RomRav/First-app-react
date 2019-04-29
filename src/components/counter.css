@@ -1,0 +1,15 @@
+.negative{
+    color: red;
+    font-weight: bolder;
+}
+
+.positive{
+    color: green;
+    font-weight: lighter;
+  
+}
+
+.null{
+    color: blue;
+    font-weight: bold;
+}
