@@ -1,6 +1,8 @@
 import React from 'react';
 import FruitList from './FruitList';
 import FruitForm from './FruitForm';
+import base from '../../base';
+
 
 class FruitApp extends React.Component {
 
@@ -14,15 +16,30 @@ class FruitApp extends React.Component {
         this.addFruit = this.addFruit.bind(this);
     }
 
+    componentWillMount() {
+        base.syncState('/', {
+            context: this,
+            state: 'fruitData'
+        })
+    }
+
+    getData() {
+        if (!this.state.fruitData.length) {
+            return [];
+        } else {
+            return this.state.fruitData;
+
+        }
+    }
 
     deleteFruit(index) {
-        let fruits = this.state.fruitData;
+        let fruits = this.getData();
         fruits.splice(index, 1);
         this.setState({ fruitData: fruits });
     }
 
     addFruit(fruitName) {
-        let fruits = this.state.fruitData;
+        let fruits = this.getData();
         fruits.push(fruitName);
         fruits.sort();
         this.setState({ fruitData: fruits })
@@ -34,7 +51,7 @@ class FruitApp extends React.Component {
         return (<div>
             <FruitForm addItem={this.addFruit} />
             <h1>Listes des fruits</h1>
-            <FruitList list={this.state.fruitData}
+            <FruitList list={this.getData()}
                 removeItem={this.deleteFruit} />
         </div>);
     }
